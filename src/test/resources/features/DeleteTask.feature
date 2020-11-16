@@ -3,7 +3,7 @@ Feature: Delete Task
 	(As a student, I remove an unnecessary task from my course to do list, so I can forget about it. )
 
 	Background:
-		Given I am a student
+		Given I have connected to the TodoManager Server
 		And I have a course (project)
 		And I have a course todo list
 

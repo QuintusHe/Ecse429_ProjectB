@@ -1,8 +1,6 @@
 package testRunner;
 
 import io.cucumber.core.gherkin.messages.internal.gherkin.internal.com.eclipsesource.json.JsonObject;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -11,7 +9,6 @@ import io.cucumber.java.en.When;
 import static org.junit.Assert.*;
 //import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -38,13 +35,13 @@ import org.json.simple.parser.JSONParser;
 import org.apache.http.HttpResponse;
 import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-public class StepDefinitions {
+public class AddTestStepDefinitions {
 
 
     public static final String baseUrl = "http://localhost:4567/";
@@ -66,53 +63,20 @@ public class StepDefinitions {
     final String active = "active";
     static HttpURLConnection connection;
 
-    private static Process process;
     // ***********************************************
     // Background step definitions
     // ***********************************************
 
-    @Before
-    public static void initial_server () throws IOException {
-        ArrayList<String> command = new ArrayList<String>();
-        //System.getProperty("java.home") + "/bin/java"
-        command.add("java"); // quick and dirty for unix
-        command.add("-jar");
-        command.add("/Users/hehuimincheng/ECSE429/runTodoManagerRestAPI-1.5.5.jar");
-
-        ProcessBuilder builder = new ProcessBuilder(command);
-        builder.redirectErrorStream(true);
-        process = builder.inheritIO().start();
-    }
-
-    @Given("I have connected to the TodoManager Server")
-    public void the_system_is_running() throws Exception {
+    @And("I have a todo list associated with the project")
+    public void iHaveATodoListAssociatedWithTheProject() {
         try{
-            URL url = new URL(baseUrl);
-            connection= (HttpURLConnection) url.openConnection();
-            connection.connect();
-            assertEquals(HttpURLConnection.HTTP_OK, connection.getResponseCode());
-        }
-        catch(Exception e){
-            System.out.println("Error in connection");
-            e.printStackTrace();
-            throw new Exception();
-        }
-
-    }
-
-    @And("I have a course \\(project)")
-    public void i_have_a_course_project() throws ClientProtocolException, IOException {
-        try{
-            JSONObject response_jason = send_request(projectEndPoint, 200);
-            JSONArray projects_list = (JSONArray) response_jason.get(project);
-
+            JSONObject response_jason = send_request(toDoEndPoint, 200);
+            JSONArray projects_list = (JSONArray) response_jason.get(todos);
             int todos_list_size = projects_list.size();
-            //check size
             assertTrue(todos_list_size >= 1);
-
         }
         catch(Exception ParseException){
-            System.out.println("Failure1");
+            ParseException.printStackTrace();
         }
     }
 
@@ -126,9 +90,51 @@ public class StepDefinitions {
     }
 
 
-    @After
-    public static void afterClass() {
-        process.destroy();
+    // ***********************************************
+    // AddTask Normal Flow
+    // ***********************************************
+
+    @When("I add a task to the todo list with a specific title")
+    public void iAddATaskToTheTodoListWithASpecificTitle() {
+
+    }
+
+    @Then("I verify that there is a task in the todo list associated with the project with the title")
+    public void iVerifyThatThereIsATaskInTheTodoListAssociatedWithTheProjectWithTheTitle() {
+    }
+
+    @When("I add a task to the todo list with a specific title and a description")
+    public void iAddATaskToTheTodoListWithASpecificTitleAndADescription() {
+
+    }
+
+    @Then("I verify that there is a task in the todo list associated with the project with the title and the description")
+    public void iVerifyThatThereIsATaskInTheTodoListAssociatedWithTheProjectWithTheTitleAndTheDescription() {
+
+    }
+
+    @Given("I deleted the project")
+    public void iDeletedTheProject() {
+
+    }
+
+    @When("I add a task to the todo list")
+    public void iAddATaskToTheTodoList() {
+
+    }
+
+    @Then("I shall be notified that the project doesn't exist")
+    public void iShallBeNotifiedThatTheProjectDoesnTExist() {
+
+    }
+
+    @Given("I deleted the todo list")
+    public void iDeletedTheTodoList() {
+
+    }
+
+    @Then("I shall be notified that the todo list doesn't exist")
+    public void iShallBeNotifiedThatTheTodoListDoesnTExist() {
     }
 }
 

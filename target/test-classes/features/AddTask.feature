@@ -3,7 +3,7 @@ Feature: Add Task
 	(As a student, I add a task to a course to do list, so I can remember it. )
 
 	Background:
-		Given I am a student
+		Given I have connected to the TodoManager Server
 		And I have a course (project)
 		And I have a todo list associated with the project
 
