@@ -51,16 +51,10 @@ public class AddTaskStepDefinitions {
     public JSONParser jsonParser = new JSONParser();
     public HttpClient httpClient = HttpClientBuilder.create().build();
 
-    final String id = "id";
     final String description = "description";
     final String title = "title";
-    final String status = "doneStatus";
     final String todos = "todos";
-    final String categories = "categories";
     final String project ="projects";
-    final String completed = "completed";
-    final String active = "active";
-    static HttpURLConnection connection;
 
     // ***********************************************
     // Background step definitions
@@ -149,7 +143,6 @@ public class AddTaskStepDefinitions {
     }
 
 
-
     // ***********************************************
     // AddTask Alternate Flow
     // ***********************************************
@@ -183,6 +176,7 @@ public class AddTaskStepDefinitions {
             System.out.println("Failure at AddTestS2");
         }
     }
+
     // ***********************************************
     // AddTask Error Flow
     // ***********************************************
