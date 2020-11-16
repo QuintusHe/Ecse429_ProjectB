@@ -15,4 +15,4 @@ Feature: Task Status
 		And I have a task under the todo list with a status of not done
 		And I delete the task
 		When I mark the task as done
-		Then I verify that exceptions is handled correctly
+		Then I verify that exceptions is handled correctly (task status)
