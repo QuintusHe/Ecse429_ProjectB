@@ -15,11 +15,6 @@ Feature: Add Task
 		When I add a task to the todo list with a specific title and a description
 		Then I verify that there is a task in the todo list associated with the project with the title and the description
 
-	Scenario: Student adds a task to a non-existing course (project) to todo list
-		Given I deleted the project
-		When I add a task to the todo list
-		Then I shall be notified that the project doesn't exist
-
 	Scenario: Student adds a task to a course (project) with no todo list
 		Given I deleted the todo list
 		When I add a task to the todo list

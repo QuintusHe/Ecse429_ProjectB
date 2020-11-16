@@ -72,7 +72,7 @@ public class StepDefinitions {
     // ***********************************************
 
     @Before
-    public static void initial_server () throws IOException {
+    public static void initial_server () throws Exception {
         ArrayList<String> command = new ArrayList<String>();
         //System.getProperty("java.home") + "/bin/java"
         command.add("java"); // quick and dirty for unix
@@ -82,6 +82,7 @@ public class StepDefinitions {
         ProcessBuilder builder = new ProcessBuilder(command);
         builder.redirectErrorStream(true);
         process = builder.inheritIO().start();
+        Thread.sleep(500);
     }
 
     @Given("I have connected to the TodoManager Server")
@@ -107,7 +108,6 @@ public class StepDefinitions {
             JSONArray projects_list = (JSONArray) response_jason.get(project);
 
             int todos_list_size = projects_list.size();
-            //check size
             assertTrue(todos_list_size >= 1);
 
         }
@@ -127,8 +127,9 @@ public class StepDefinitions {
 
 
     @After
-    public static void afterClass() {
+    public static void afterClass() throws Exception{
         process.destroy();
+        Thread.sleep(500);
     }
 }
 
