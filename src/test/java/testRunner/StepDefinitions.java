@@ -16,7 +16,6 @@ import java.net.URL;
 //import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -283,9 +282,9 @@ public class StepDefinitions {
         StringEntity userEntity = new StringEntity(json.toString());
         request.addHeader("content-type", "application/json");
         request.setEntity(userEntity);
-        HttpResponse httpResponse = httpClient.execute(request);
-        
-        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
+//        HttpResponse httpResponse = httpClient.execute(request);
+//        
+//        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
 
 	}
 
@@ -304,9 +303,29 @@ public class StepDefinitions {
         assertEquals(200, httpResponse.getStatusLine().getStatusCode());
 	}
 	@Then("I verify that the task's description is changed")
-	public void i_verify_that_the_task_s_description_is_changed() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_verify_that_the_task_s_description_is_changed() throws ClientProtocolException, IOException {
+		String expected_id = "2";
+        String expected_title = "Test_cat_001";
+        String expected_description = "Change description";
+        //Set request
+        HttpUriRequest request = new HttpGet(baseUrl + toDoEndIDPoint + expected_id);
+        HttpResponse httpResponse = httpClient.execute(request);
+        
+      //Check response status
+        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
+        //Check code
+        String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
+        try {
+            JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
+            JSONArray todos_list = (JSONArray) response_jason.get(todos);
+            JSONObject todo_object = (JSONObject) todos_list.get(0);
+            assertEquals(expected_id, (String) (todo_object.get(id)));
+            assertEquals(expected_title, (String) (todo_object.get(title)));
+            assertEquals(expected_description, (String) (todo_object.get(description)));
+
+        } catch (Exception PasrException) {
+            System.out.println("Failure");
+	    }
 	}
 		
 	// ***********************************************
@@ -315,20 +334,62 @@ public class StepDefinitions {
 		
 
 	@Given("I have a task without description")
-	public void i_have_a_task_without_description() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_have_a_task_without_description() throws UnsupportedEncodingException {
+		String expected_id = "2";
+        //String expected_title = "file paperwork";
+		String expected_des = "";
+        HttpPost request = new HttpPost(baseUrl + toDoEndIDPoint + expected_id);
+        String title_value = "Test_cat_001";
+        JSONObject json = new JSONObject();
+        json.put(title, title_value);
+        json.put(description, expected_des);
+        StringEntity userEntity = new StringEntity(json.toString());
+        request.addHeader("content-type", "application/json");
+        request.setEntity(userEntity);
+//        HttpResponse httpResponse = httpClient.execute(request);
+//        
+//        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
+
 	}
 	
 	@When("I changed the empty description of the task")
-	public void i_changed_the_empty_description_of_the_task() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_changed_the_empty_description_of_the_task() throws ClientProtocolException, IOException {
+		String expected_id = "2";
+	    HttpPost request = new HttpPost(baseUrl + toDoEndIDPoint + expected_id );
+	    String new_des = "Change description";
+	    JSONObject json = new JSONObject();
+	    json.put(description, new_des);
+	    StringEntity userEntity = new StringEntity(json.toString());
+	    request.addHeader("content-type", "application/json");
+	    request.setEntity(userEntity);
+	    HttpResponse httpResponse = httpClient.execute(request);
+
+        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
 	}
 	@Then("I verify that the empty task's description is changed")
-	public void i_verify_that_the_empty_task_s_description_is_changed() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_verify_that_the_empty_task_s_description_is_changed() throws ClientProtocolException, IOException {
+		String expected_id = "2";
+        String expected_title = "Test_cat_001";
+        String expected_description = "Change description";
+        //Set request
+        HttpUriRequest request = new HttpGet(baseUrl + toDoEndIDPoint + expected_id);
+        HttpResponse httpResponse = httpClient.execute(request);
+        
+      //Check response status
+        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
+        //Check code
+        String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
+        try {
+            JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
+            JSONArray todos_list = (JSONArray) response_jason.get(todos);
+            JSONObject todo_object = (JSONObject) todos_list.get(0);
+            assertEquals(expected_id, (String) (todo_object.get(id)));
+            assertEquals(expected_title, (String) (todo_object.get(title)));
+            assertEquals(expected_description, (String) (todo_object.get(description)));
+
+        } catch (Exception PasrException) {
+            System.out.println("Failure");
+	    }
 	}
 	
 	
@@ -338,19 +399,35 @@ public class StepDefinitions {
 	
 	@Given("I have no task")
 	public void i_have_no_task() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    //no task is created
 	}
 
 	@When("I changed the description of the non-exist task")
-	public void i_changed_the_description_of_the_non_exist_task() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_changed_the_description_of_the_non_exist_task() throws ClientProtocolException, IOException {
+		String expected_id = "101";
+	    HttpPost request = new HttpPost(baseUrl + toDoEndIDPoint + expected_id );
+	    String new_des = "Change description";
+	    JSONObject json = new JSONObject();
+	    json.put(description, new_des);
+	    StringEntity userEntity = new StringEntity(json.toString());
+	    request.addHeader("content-type", "application/json");
+	    request.setEntity(userEntity);
+	    HttpResponse httpResponse = httpClient.execute(request);
+
+        assertEquals(404, httpResponse.getStatusLine().getStatusCode());
 	}
 	@Then("I verify that description editing exceptions is handled correctly")
-	public void i_verify_that_description_editing_exceptions_is_handled_correctly() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_verify_that_description_editing_exceptions_is_handled_correctly() throws ClientProtocolException, IOException {
+		String expected_id = "101";
+        String expected_title = "Test_cat_001";
+        String expected_description = "Change description";
+        //Set request
+        HttpUriRequest request = new HttpGet(baseUrl + toDoEndIDPoint + expected_id);
+        HttpResponse httpResponse = httpClient.execute(request);
+        
+      //Check response status
+        assertEquals(404, httpResponse.getStatusLine().getStatusCode());
+
 	}
 		
 	// ***********************************************
