@@ -13,6 +13,6 @@ Feature: Task Status
 	Scenario: Student changes the status of a non-existing task to done
 		Given I have a todo list named as my course
 		And I have a task under the todo list with a status of not done
-		And I delete the task
+		And I delete the task 1
 		When I mark the task as done
 		Then I verify that exceptions is handled correctly (task status)

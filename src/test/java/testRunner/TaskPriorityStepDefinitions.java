@@ -146,8 +146,8 @@ public class TaskPriorityStepDefinitions {
         } catch (Exception e) {};
     }
     
-    @Then("I shall be notified that the task doesn't exist")
-    public void I_shall_be_notified_that_the_task_doesn_t_exist(){
+    @Then("I shall be notified that the task doesn't exist 1")
+    public void I_shall_be_notified_that_the_task_doesn_t_exist_1(){
     	assertEquals(404,httpCode1);
     }
     

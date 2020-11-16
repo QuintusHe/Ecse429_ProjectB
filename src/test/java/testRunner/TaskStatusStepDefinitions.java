@@ -123,8 +123,8 @@ public class TaskStatusStepDefinitions {
     	assertEquals(expecteCode, httpCode1);
     }
     
-    @Given("I delete the task")
-    public void I_delete_the_task() {
+    @Given("I delete the task 1")
+    public void I_delete_the_task_1() {
     	HttpDelete request = new HttpDelete(baseUrl+toDoEndPoint+"/"+todoListId1);
     	try{
     		HttpResponse httpResponse = httpClient.execute(request);

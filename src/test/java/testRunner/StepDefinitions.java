@@ -29,11 +29,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-//import org.junit.jupiter.api.AfterAll;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.MethodOrderer.Alphanumeric;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.TestMethodOrder;
 import org.apache.http.HttpResponse;
 import org.json.simple.parser.ParseException;
 
@@ -46,26 +41,7 @@ import java.util.Arrays;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-public class StepDefinitions {
-
-    public static final String baseUrl = "http://localhost:4567/";
-    public static final String projectEndPoint = "projects";
-    public static final String tasksEndIDPoint = "/tasks";
-    public static final String toDoEndPoint = "todos";
-    public static final String categoriesEndPoint = "/categories";
-    public JSONParser jsonParser = new JSONParser();
-    public HttpClient httpClient = HttpClientBuilder.create().build();
-
-    final String id = "id";
-    final String description = "description";
-    final String title = "title";
-    final String status = "doneStatus";
-    final String todos = "todos";
-    final String categories = "categories";
-    final String project ="projects";
-    final String completed = "completed";
-    final String active = "active";
-    static HttpURLConnection connection;
+public class StepDefinitions extends FeatureStepDefinitions {
 
     private static Process process;
     // ***********************************************
@@ -117,20 +93,13 @@ public class StepDefinitions {
         }
     }
 
-    private JSONObject send_request(String toDoEndPoint, int status) throws IOException, ParseException {
-        HttpUriRequest request = new HttpGet(  baseUrl+ toDoEndPoint);
-        HttpResponse httpResponse = httpClient.execute(request);
-        assertEquals(status, httpResponse.getStatusLine().getStatusCode());
-        String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
-        JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
-        return response_jason;
-    }
-
 
     @After
     public static void afterClass() throws Exception{
         process.destroy();
         Thread.sleep(500);
     }
+
+
 }
 
