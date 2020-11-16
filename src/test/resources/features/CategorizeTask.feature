@@ -3,7 +3,7 @@ Feature: Task Categorization
 	(As a student, I categorize tasks as HIGH, MEDIUM or LOW priority, so I can better manage my time.)
 
 	Background:
-		Given I am a student
+		Given I have connected to the TodoManager Server
 		And I have a course (project)
 
 	Scenario: Student adjusts a task as LOW priority From DEFAULT priority
