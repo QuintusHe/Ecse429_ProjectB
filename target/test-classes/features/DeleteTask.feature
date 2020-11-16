@@ -5,7 +5,7 @@ Feature: Delete Task
 	Background:
 		Given I have connected to the TodoManager Server
 		And I have a course (project)
-		And I have a course todo list
+		And I have a todo list associated with the project
 
 	Scenario: Student delete a task from my course to do list
 		Given I have a task under my course(project) todo list
@@ -18,6 +18,6 @@ Feature: Delete Task
 		Then I shall be notified that the task has already removed
 
 	Scenario: Student delete a non-existing task from my course to do list
-		Given I have a task under my course (project) todo list
+		Given I have a task under my course(project) todo list
 		When I delete the task
 		Then I shall be notified that the task has already removed

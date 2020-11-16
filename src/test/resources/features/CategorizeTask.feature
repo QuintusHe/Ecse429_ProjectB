@@ -17,7 +17,5 @@ Feature: Task Categorization
 		Then I verify that the task's priority is HIGH
 
 	Scenario: Student adjusts a non-existing task as HIGH priority
-		Given I have a task with a priority of DEFAULT
-		And I delete the task
-		When I adjust the task as HIGH priority
+		When I adjust a non_exist task as HIGH priority
 		Then I shall be notified that the task doesn't exist

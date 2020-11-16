@@ -41,20 +41,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class AddTaskStepDefinitions {
-
-
-    public static final String baseUrl = "http://localhost:4567/";
-    public static final String toDoEndPoint = "todos";
-    public static final String toDoEndIDPoint = "todos/";
-    public static final String tasksOfEndPoint = "/tasksof";
-    public JSONParser jsonParser = new JSONParser();
-    public HttpClient httpClient = HttpClientBuilder.create().build();
-
-    final String description = "description";
-    final String title = "title";
-    final String todos = "todos";
-    final String project ="projects";
+public class AddTaskStepDefinitions extends FeatureStepDefinitions{
 
     // ***********************************************
     // Background step definitions
@@ -188,33 +175,6 @@ public class AddTaskStepDefinitions {
         }
     }
 
-    private JSONObject send_request(String toDoEndPoint, int status) throws IOException, ParseException {
-        HttpUriRequest request = new HttpGet(  baseUrl+ toDoEndPoint);
-        HttpResponse httpResponse = httpClient.execute(request);
-        assertEquals(status, httpResponse.getStatusLine().getStatusCode());
-        String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
-        JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
-        return response_jason;
-    }
 
-    private JSONObject send_post_request(String toDoEndPoint,int status, StringEntity userEntity) throws IOException, ParseException {
-        HttpPost request = new HttpPost(  baseUrl+ toDoEndPoint);
-        request.addHeader("content-type", "application/json");
-        request.setEntity(userEntity);
-        HttpResponse httpResponse = httpClient.execute(request);
-        assertEquals(status, httpResponse.getStatusLine().getStatusCode());
-        String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
-        JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
-        return response_jason;
-    }
-
-    private JSONObject send_delete_request(String toDoEndPoint,int status) throws IOException, ParseException {
-        HttpUriRequest request = new HttpDelete(  baseUrl+ toDoEndPoint);
-        HttpResponse httpResponse = httpClient.execute(request);
-        assertEquals(status, httpResponse.getStatusLine().getStatusCode());
-        String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
-        JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
-        return response_jason;
-    }
 }
 
