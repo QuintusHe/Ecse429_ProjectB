@@ -44,42 +44,6 @@ public class QueryTaskStepDefinitions {
     static HttpURLConnection connection;
 
     //***********************************************
-    //TaskStatus Scenario
-    //***********************************************
-    String todoListId1;
-    String todoListTitle1 = "my course";
-    boolean todoListStatus1 = false;
-    String todoListDescription1 = "Imcomplete todo list";
-    JSONObject returnedOBJ1;
-    int httpCode1;
-
-    @Given("I have a todo list named as my course")
-    public void I_have_a_todo_list_named_as_my_course() {
-        HttpPost request = new HttpPost(baseUrl+toDoEndPoint);
-        JSONObject json = new JSONObject();
-        json.put("title", todoListTitle1);
-        json.put("doneStatus", todoListStatus1);
-        json.put("description", todoListDescription1);
-        try {
-            StringEntity userEntity = new StringEntity(json.toString());
-            request.addHeader("content-type", "application/json");
-            request.setEntity(userEntity);
-            HttpResponse httpResponse = httpClient.execute(request);
-            assertEquals(201, httpResponse.getStatusLine().getStatusCode());
-            String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
-            JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
-            JSONArray todos_list = (JSONArray) response_jason.get(todos);
-            JSONObject todo_object = (JSONObject) todos_list.get(0);
-            todoListId1 = (String) (todo_object.get("id"));
-        } catch (Exception e) {};
-    }
-
-    @Given("I have a task under the todo list with a status of not done")
-    public void I_have_a_task_under_the_todo_list_with_a_status_of_not_done() {
-
-    }
-
-    //***********************************************
     //QueryTask Scenario
     //***********************************************
 

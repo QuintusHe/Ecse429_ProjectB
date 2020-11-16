@@ -18,4 +18,4 @@ Feature: Task Prioriy
 	Scenario: Student changes the priority for a non-esxiting task (todo)
 		Given I have no task associated with the project
 		When I change the task priority to MEDIUM
-		Then I shall be notified that the task doesn't exist
+		Then I shall be notified that the task doesn't exist 1
