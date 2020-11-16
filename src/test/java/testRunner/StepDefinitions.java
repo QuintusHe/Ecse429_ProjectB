@@ -16,6 +16,7 @@ import java.net.URL;
 //import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -289,9 +290,18 @@ public class StepDefinitions {
 	}
 
 	@When("I changed the description of the task")
-	public void i_changed_the_description_of_the_task() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_changed_the_description_of_the_task() throws ClientProtocolException, IOException {
+		String expected_id = "2";
+	    HttpPost request = new HttpPost(baseUrl + toDoEndIDPoint + expected_id );
+	    String new_des = "Change description";
+	    JSONObject json = new JSONObject();
+	    json.put(description, new_des);
+	    StringEntity userEntity = new StringEntity(json.toString());
+	    request.addHeader("content-type", "application/json");
+	    request.setEntity(userEntity);
+	    HttpResponse httpResponse = httpClient.execute(request);
+
+        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
 	}
 	@Then("I verify that the task's description is changed")
 	public void i_verify_that_the_task_s_description_is_changed() {
