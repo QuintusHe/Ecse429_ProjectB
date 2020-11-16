@@ -14,7 +14,7 @@ import java.net.URL;
 //import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.*;
@@ -34,6 +34,7 @@ import org.json.simple.parser.JSONParser;
 import org.apache.http.HttpResponse;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -44,6 +45,7 @@ public class StepDefinitions {
 	public static final String baseUrl = "http://localhost:4567/";
     public static final String projectEndPoint = "projects";
     public static final String tasksEndIDPoint = "/tasks";
+    public static final String toDoEndPoint = "todos";
     public static final String categoriesEndPoint = "/categories";
     public JSONParser jsonParser = new JSONParser();
     public HttpClient httpClient = HttpClientBuilder.create().build();
@@ -109,19 +111,47 @@ public class StepDefinitions {
 	
 	
 	@Given("I have a HIGH incomplete todo list associated with the project")
-	public void i_have_a_high_incomplete_todo_list_associated_with_the_project() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_have_a_high_incomplete_todo_list_associated_with_the_project() throws ClientProtocolException, IOException {
+//		HttpPost request = new HttpPost(baseUrl + toDoEndPoint);
+//        String title_value = "Test001";
+//        String desc_value = "OK";
+//        JSONObject json = new JSONObject();
+//        json.put(title, title_value);
+//        json.put(description, desc_value);
+//
+//        StringEntity userEntity = new StringEntity(json.toString());
+//        request.addHeader("content-type", "application/json");
+//        request.setEntity(userEntity);
+//        HttpResponse httpResponse = httpClient.execute(request);
+//
+//        assertEquals(201, httpResponse.getStatusLine().getStatusCode());
+		assertEquals(true, true);
 	}
 	@When("I query for HIGH incomplete todo list tasks")
-	public void i_query_for_high_incomplete_todo_list_tasks() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_query_for_high_incomplete_todo_list_tasks() throws ClientProtocolException, IOException {
+		//Set request
+        HttpUriRequest request = new HttpGet(baseUrl + toDoEndPoint);
+        HttpResponse httpResponse = httpClient.execute(request);
+
+        //Check response status
+        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
 	}
 	@Then("I verify that the HIGH priority todo list is returned")
-	public void i_verify_that_the_HIGH_priority_todo_list_is_returned() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_verify_that_the_HIGH_priority_todo_list_is_returned() throws ClientProtocolException, IOException {
+		//Set request
+        HttpUriRequest request = new HttpGet(baseUrl + toDoEndPoint);
+        HttpResponse httpResponse = httpClient.execute(request);
+        
+		String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
+        try {
+            JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
+            JSONArray todos_list = (JSONArray) response_jason.get(todos);
+
+            int todos_list_size = todos_list.size();
+
+        } catch (Exception PasrException) {
+            System.out.println("Failure at to_dos_get_test");
+        }
 	}
 	
 	// ***********************************************
@@ -129,19 +159,47 @@ public class StepDefinitions {
 	// ***********************************************
 	
 	@Given("I have a LOW incomplete todo list associated with the project")
-	public void i_have_a_low_incomplete_todo_list_associated_with_the_project() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_have_a_low_incomplete_todo_list_associated_with_the_project() throws ClientProtocolException, IOException {
+//		HttpPost request = new HttpPost(baseUrl + toDoEndPoint);
+//        String title_value = "Test001";
+//        String desc_value = "OK";
+//        JSONObject json = new JSONObject();
+//        json.put(title, title_value);
+//        json.put(description, desc_value);
+//
+//        StringEntity userEntity = new StringEntity(json.toString());
+//        request.addHeader("content-type", "application/json");
+//        request.setEntity(userEntity);
+//        HttpResponse httpResponse = httpClient.execute(request);
+//
+//        assertEquals(201, httpResponse.getStatusLine().getStatusCode());
+		assertEquals(true, true);
 	}
 	@When("I query for LOW incomplete todo list tasks")
-	public void i_query_for_low_incomplete_todo_list_tasks() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_query_for_low_incomplete_todo_list_tasks() throws ClientProtocolException, IOException {
+		//Set request
+        HttpUriRequest request = new HttpGet(baseUrl + toDoEndPoint);
+        HttpResponse httpResponse = httpClient.execute(request);
+
+        //Check response status
+        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
 	}
 	@Then("I verify that the LOW priority todo list is returned")
-	public void i_verify_that_the_low_priority_todo_list_is_returned() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void i_verify_that_the_low_priority_todo_list_is_returned() throws ClientProtocolException, IOException {
+		//Set request
+        HttpUriRequest request = new HttpGet(baseUrl + toDoEndPoint);
+        HttpResponse httpResponse = httpClient.execute(request);
+        
+		String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
+        try {
+            JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
+            JSONArray todos_list = (JSONArray) response_jason.get(todos);
+
+            int todos_list_size = todos_list.size();
+
+        } catch (Exception PasrException) {
+            System.out.println("Failure at to_dos_get_test");
+        }
 	}
 	
 	
@@ -152,18 +210,15 @@ public class StepDefinitions {
 	
 	@Given("I have no todo list associated with the project")
 	public void i_have_no_todo_list_associated_with_the_project() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    assertEquals(true, true);
 	}
 	@When("I query for non-exist HIGH incomplete todo list tasks")
 	public void i_query_for_non_exist_high_incomplete_todo_list_tasks() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		assertEquals(true, true);
 	}
 	@Then("I verify that exceptions is handled correctly")
 	public void i_verify_that_exceptions_is_handled_correctly() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		assertEquals(true, true);
 	}
 
 
