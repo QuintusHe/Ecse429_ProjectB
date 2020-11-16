@@ -73,34 +73,9 @@ public class AddTaskStepDefinitions {
         }
     }
 
-    private JSONObject send_request(String toDoEndPoint, int status) throws IOException, ParseException {
-        HttpUriRequest request = new HttpGet(  baseUrl+ toDoEndPoint);
-        HttpResponse httpResponse = httpClient.execute(request);
-        assertEquals(status, httpResponse.getStatusLine().getStatusCode());
-        String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
-        JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
-        return response_jason;
-    }
-
-    private JSONObject send_post_request(String toDoEndPoint,int status, StringEntity userEntity) throws IOException, ParseException {
-        HttpPost request = new HttpPost(  baseUrl+ toDoEndPoint);
-        request.addHeader("content-type", "application/json");
-        request.setEntity(userEntity);
-        HttpResponse httpResponse = httpClient.execute(request);
-        assertEquals(status, httpResponse.getStatusLine().getStatusCode());
-        String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
-        JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
-        return response_jason;
-    }
-
-    private JSONObject send_delete_request(String toDoEndPoint,int status) throws IOException, ParseException {
-        HttpUriRequest request = new HttpDelete(  baseUrl+ toDoEndPoint);
-        HttpResponse httpResponse = httpClient.execute(request);
-        assertEquals(status, httpResponse.getStatusLine().getStatusCode());
-        String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
-        JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
-        return response_jason;
-    }
+    // ***********************************************
+    // AddTask Normal Flow
+    // ***********************************************
 
     String expected_id = "1";
     String title_value = "Test_task_001";
@@ -108,9 +83,7 @@ public class AddTaskStepDefinitions {
     String description_value = "This is description";
     StringEntity userEntity;
 
-    // ***********************************************
-    // AddTask Normal Flow
-    // ***********************************************
+
 
     @When("I add a task to the todo list with a specific title")
     public void iAddATaskToTheTodoListWithASpecificTitle() {
@@ -213,6 +186,35 @@ public class AddTaskStepDefinitions {
         } catch (Exception ParseException) {
             System.out.println("Failure at AddTestS3");
         }
+    }
+
+    private JSONObject send_request(String toDoEndPoint, int status) throws IOException, ParseException {
+        HttpUriRequest request = new HttpGet(  baseUrl+ toDoEndPoint);
+        HttpResponse httpResponse = httpClient.execute(request);
+        assertEquals(status, httpResponse.getStatusLine().getStatusCode());
+        String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
+        JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
+        return response_jason;
+    }
+
+    private JSONObject send_post_request(String toDoEndPoint,int status, StringEntity userEntity) throws IOException, ParseException {
+        HttpPost request = new HttpPost(  baseUrl+ toDoEndPoint);
+        request.addHeader("content-type", "application/json");
+        request.setEntity(userEntity);
+        HttpResponse httpResponse = httpClient.execute(request);
+        assertEquals(status, httpResponse.getStatusLine().getStatusCode());
+        String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
+        JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
+        return response_jason;
+    }
+
+    private JSONObject send_delete_request(String toDoEndPoint,int status) throws IOException, ParseException {
+        HttpUriRequest request = new HttpDelete(  baseUrl+ toDoEndPoint);
+        HttpResponse httpResponse = httpClient.execute(request);
+        assertEquals(status, httpResponse.getStatusLine().getStatusCode());
+        String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
+        JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
+        return response_jason;
     }
 }
 
