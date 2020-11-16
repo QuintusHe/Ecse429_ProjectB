@@ -1,6 +1,5 @@
 package testRunner;
 
-import io.cucumber.core.gherkin.messages.internal.gherkin.internal.com.eclipsesource.json.JsonObject;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -44,8 +43,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class StepDefinitions {
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
+public class StepDefinitions {
 
     public static final String baseUrl = "http://localhost:4567/";
     public static final String projectEndPoint = "projects";

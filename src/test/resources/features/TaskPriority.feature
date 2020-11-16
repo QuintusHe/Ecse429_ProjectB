@@ -3,8 +3,8 @@ Feature: Task Prioriy
 	(As a student, I want to adjust the priority of a task, to help better manage my time.)
 
 Background:
-	Given I am a student
-	Given I have a course (project)
+	Given I have connected to the TodoManager Server
+	And I have a course (project)
  
 Scenario: Student changes the tasks (todo) priority from HIGH to LOW
 	Given I have a HIGH priority task associated with the project

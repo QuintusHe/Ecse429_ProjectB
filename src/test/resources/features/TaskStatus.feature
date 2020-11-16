@@ -3,8 +3,8 @@ Feature: Task Status
 	(As a student, I mark a task as done on my course to do list, so I can track my accomplishments.)
  
 Background:
-	Given I am a student
-	Given I have a course (project) 
+	Given I have connected to the TodoManager Server
+	And I have a course (project)
  
 Scenario: Student changes the status of a task to done
 	Given I have a todo list named as my course

@@ -3,8 +3,8 @@ Feature: Delete Todo
 	(As a student, I remove a to do list for a class which I am no longer taking, to declutter my schedule.)
 	
 Background:
-	Given I am a student
-	Given I have a course (project)
+	Given I have connected to the TodoManager Server
+	And I have a course (project)
  
 Scenario: Student delete a todo list
 	Given I have a todo list

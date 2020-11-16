@@ -3,8 +3,8 @@ Feature: Task Query
 	(As a student, I query the incomplete tasks for a class I am taking, to help manage my time.)
 	
 Background:
-	Given I am a student
-	Given I have a course (project)
+	Given I have connected to the TodoManager Server
+	And I have a course (project)
  
 Scenario: Student query incomplete tasks (todo) for a class (project)
 	Given I have an incomplete todo list associated with the project
