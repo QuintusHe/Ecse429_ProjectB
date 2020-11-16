@@ -1,6 +1,8 @@
 package testRunner;
 
 import io.cucumber.core.gherkin.messages.internal.gherkin.internal.com.eclipsesource.json.JsonObject;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -34,11 +36,13 @@ import org.json.simple.parser.ParseException;
 //import org.junit.jupiter.api.TestMethodOrder;
 import org.apache.http.HttpResponse;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class StepDefinitions {
 	
@@ -63,8 +67,28 @@ public class StepDefinitions {
     final String completed = "completed";
     final String active = "active";
     static HttpURLConnection connection;
-	
+    
+    private static Process process;
+    
+    @Before
+    public static void initial_server () throws IOException {
+        ArrayList<String> command = new ArrayList<String>();
+        //System.getProperty("java.home") + "/bin/java"
+        command.add("java"); // quick and dirty for unix
+        command.add("-jar");
+        command.add("/Users/hezirui/Downloads/runTodoManagerRestAPI-1.5.5.jar");
 
+        ProcessBuilder builder = new ProcessBuilder(command);
+        builder.redirectErrorStream(true);
+        process = builder.inheritIO().start();
+    }
+    
+    @After
+    public static void afterClass() {
+        process.destroy();
+        System.out.println(process.isAlive());
+    }
+    
 	// ***********************************************
 	// Background step definitions
 	// ***********************************************
@@ -238,7 +262,86 @@ public class StepDefinitions {
         //Check response status
         assertEquals(404, httpResponse.getStatusLine().getStatusCode());
 	}
+	
+	
+	// ***********************************************
+	// EditTaskDescription First Scenario
+	// ***********************************************
+		
+		
+	@Given("I have a task with description")
+	public void i_have_a_task_with_description() throws ClientProtocolException, IOException {
+		String expected_id = "2";
+        //String expected_title = "file paperwork";
+		String expected_des = "Test_description";
+        HttpPost request = new HttpPost(baseUrl + toDoEndIDPoint + expected_id);
+        String title_value = "Test_cat_001";
+        JSONObject json = new JSONObject();
+        json.put(title, title_value);
+        json.put(description, expected_des);
+        StringEntity userEntity = new StringEntity(json.toString());
+        request.addHeader("content-type", "application/json");
+        request.setEntity(userEntity);
+        HttpResponse httpResponse = httpClient.execute(request);
+        
+        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
 
+	}
+
+	@When("I changed the description of the task")
+	public void i_changed_the_description_of_the_task() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+	@Then("I verify that the task's description is changed")
+	public void i_verify_that_the_task_s_description_is_changed() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+		
+	// ***********************************************
+	// EditTaskDescription Second Scenario
+	// ***********************************************
+		
+
+	@Given("I have a task without description")
+	public void i_have_a_task_without_description() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+	
+	@When("I changed the empty description of the task")
+	public void i_changed_the_empty_description_of_the_task() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+	@Then("I verify that the empty task's description is changed")
+	public void i_verify_that_the_empty_task_s_description_is_changed() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+	
+	
+	//***********************************************
+	//EditTaskDescription Third Scenario
+	//***********************************************
+	
+	@Given("I have no task")
+	public void i_have_no_task() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@When("I changed the description of the non-exist task")
+	public void i_changed_the_description_of_the_non_exist_task() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+	@Then("I verify that description editing exceptions is handled correctly")
+	public void i_verify_that_description_editing_exceptions_is_handled_correctly() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
 		
 	// ***********************************************
 	// PriorityQueryTask First Scenario

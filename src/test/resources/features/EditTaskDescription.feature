@@ -3,7 +3,7 @@ Feature: Edit Task Description
 	(As a student, I want to change a task description, to better represent the work to do. )
 	
 Background:
-	Given I am a student
+	Given The system is running
 	Given I have a course (project)
  
 Scenario: Student edit the description of a task with description
