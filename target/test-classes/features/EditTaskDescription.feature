@@ -4,14 +4,19 @@ Feature: Edit Task Description
 	
 Background:
 	Given I have connected to the TodoManager Server
-	And I have a course (project)
+	Given I have a course (project)
  
-Scenario: Student edit the description of a task
-	Given I have a task
+Scenario: Student edit the description of a task with description
+	Given I have a task with description
 	When I changed the description of the task
 	Then I verify that the task's description is changed
+	
+Scenario: Student edit the description of a task with no description
+	Given I have a task without description
+	When I changed the empty description of the task
+	Then I verify that the empty task's description is changed
 
 Scenario: Student edit the description of a non-existing task
 	Given I have no task
-	When I changed the description of the task
-	Then I verify that exceptions is handled correctly
+	When I changed the description of the non-exist task
+	Then I verify that description editing exceptions is handled correctly

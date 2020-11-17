@@ -4,14 +4,19 @@ Feature: Delete Todo
 	
 Background:
 	Given I have connected to the TodoManager Server
-	And I have a course (project)
+	Given I have a course (project)
  
-Scenario: Student delete a todo list
-	Given I have a todo list
-	When I delete the todo list
-	Then I verify that the todo list is removed
+Scenario: Student delete a todo list with tasks in it
+	Given I have a todo list with tasks for the course
+	When I delete the todo list with tasks
+	Then I verify that the todo list with tasks is removed
+
+Scenario: Student delete a todo list with no tasks in it
+	Given I have an empty todo list for the course
+	When I delete the empty todo list
+	Then I verify that the empty todo list is removed
 
 Scenario: Student delete a non-existing todo list
 	Given I have no todo list
 	When I delete the todo list
-	Then I verify that exceptions is handled correctly
+	Then I verify that non-exsit todo list exceptions is handled correctly
