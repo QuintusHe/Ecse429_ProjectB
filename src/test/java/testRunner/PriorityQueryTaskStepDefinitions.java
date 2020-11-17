@@ -7,7 +7,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
@@ -25,6 +27,7 @@ public class PriorityQueryTaskStepDefinitions {
     public static final String projectEndPoint = "projects";
     public static final String tasksEndIDPoint = "/tasks";
     public static final String toDoEndPoint = "todos";
+    public static final String toDoEndIDPoint = "todos/";
     public static final String categoriesEndPoint = "/categories";
     public JSONParser jsonParser = new JSONParser();
     public HttpClient httpClient = HttpClientBuilder.create().build();
@@ -47,29 +50,27 @@ public class PriorityQueryTaskStepDefinitions {
 
     @Given("I have a HIGH incomplete todo list associated with the project")
     public void i_have_a_high_incomplete_todo_list_associated_with_the_project() throws ClientProtocolException, IOException {
-//		HttpPost request = new HttpPost(baseUrl + toDoEndPoint);
-//        String title_value = "Test001";
-//        String desc_value = "OK";
-//        JSONObject json = new JSONObject();
-//        json.put(title, title_value);
-//        json.put(description, desc_value);
-//
-//        StringEntity userEntity = new StringEntity(json.toString());
-//        request.addHeader("content-type", "application/json");
-//        request.setEntity(userEntity);
-//        HttpResponse httpResponse = httpClient.execute(request);
-//
-//        assertEquals(201, httpResponse.getStatusLine().getStatusCode());
-        assertEquals(true, true);
+    	String expected_id = "1";
+	 	String expected_title = "scan paperwork";
+        String expected_status = "false";
+        String expected_desc = "HIGH";
+        HttpPost request = new HttpPost(  baseUrl+ projectEndPoint+ "/"+ expected_id+tasksEndIDPoint);
+        String todo_id = "1";
+        JSONObject json = new JSONObject();
+        json.put("id", todo_id);
+ 
+        StringEntity userEntity = new StringEntity(json.toString());
+        request.addHeader("content-type", "application/json");
+        request.setEntity(userEntity);
+ 
     }
     @When("I query for HIGH incomplete todo list tasks")
     public void i_query_for_high_incomplete_todo_list_tasks() throws ClientProtocolException, IOException {
+    	String expected_id = "1";
+        String expected_description = "HIGH";
         //Set request
-        HttpUriRequest request = new HttpGet(baseUrl + toDoEndPoint);
+        HttpUriRequest request = new HttpGet(baseUrl + toDoEndIDPoint + expected_id);
         HttpResponse httpResponse = httpClient.execute(request);
-
-        //Check response status
-        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
     }
     @Then("I verify that the HIGH priority todo list is returned")
     public void i_verify_that_the_HIGH_priority_todo_list_is_returned() throws ClientProtocolException, IOException {
@@ -95,29 +96,27 @@ public class PriorityQueryTaskStepDefinitions {
 
     @Given("I have a LOW incomplete todo list associated with the project")
     public void i_have_a_low_incomplete_todo_list_associated_with_the_project() throws ClientProtocolException, IOException {
-//		HttpPost request = new HttpPost(baseUrl + toDoEndPoint);
-//        String title_value = "Test001";
-//        String desc_value = "OK";
-//        JSONObject json = new JSONObject();
-//        json.put(title, title_value);
-//        json.put(description, desc_value);
-//
-//        StringEntity userEntity = new StringEntity(json.toString());
-//        request.addHeader("content-type", "application/json");
-//        request.setEntity(userEntity);
-//        HttpResponse httpResponse = httpClient.execute(request);
-//
-//        assertEquals(201, httpResponse.getStatusLine().getStatusCode());
-        assertEquals(true, true);
-    }
-    @When("I query for LOW incomplete todo list tasks")
-    public void i_query_for_low_incomplete_todo_list_tasks() throws ClientProtocolException, IOException {
+    	String expected_id = "1";
+		String expected_title = "scan paperwork";
+	    String expected_status = "false";
+	    String expected_desc = "HIGH";
+	    HttpPost request = new HttpPost(  baseUrl+ projectEndPoint+ "/"+ expected_id+tasksEndIDPoint);
+	    String todo_id = "1";
+	    JSONObject json = new JSONObject();
+	    json.put("id", todo_id);
+	
+	    StringEntity userEntity = new StringEntity(json.toString());
+	    request.addHeader("content-type", "application/json");
+	    request.setEntity(userEntity);
+	    }
+	    @When("I query for LOW incomplete todo list tasks")
+	    public void i_query_for_low_incomplete_todo_list_tasks() throws ClientProtocolException, IOException {
+    	String expected_id = "1";
+        String expected_description = "LOW";
         //Set request
-        HttpUriRequest request = new HttpGet(baseUrl + toDoEndPoint);
+        HttpUriRequest request = new HttpGet(baseUrl + toDoEndIDPoint + expected_id);
         HttpResponse httpResponse = httpClient.execute(request);
 
-        //Check response status
-        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
     }
     @Then("I verify that the LOW priority todo list is returned")
     public void i_verify_that_the_low_priority_todo_list_is_returned() throws ClientProtocolException, IOException {
@@ -148,12 +147,30 @@ public class PriorityQueryTaskStepDefinitions {
         assertEquals(true, true);
     }
     @When("I query for non-exist HIGH incomplete todo list tasks")
-    public void i_query_for_non_exist_high_incomplete_todo_list_tasks() {
-        assertEquals(true, true);
+    public void i_query_for_non_exist_high_incomplete_todo_list_tasks() throws ClientProtocolException, IOException {
+    	 String expected_id = "101";
+         String expected_title = "scan paperwork";
+         String expected_status = "false";
+         String expected_description = "";
+         //Set request
+         HttpUriRequest request = new HttpGet(baseUrl + toDoEndIDPoint + expected_id);
+         HttpResponse httpResponse = httpClient.execute(request);
+
+         //Check response status
+         assertEquals(404, httpResponse.getStatusLine().getStatusCode());
     }
     @Then("I verify that exceptions is handled correctly")
-    public void i_verify_that_exceptions_is_handled_correctly() {
-        assertEquals(true, true);
+    public void i_verify_that_exceptions_is_handled_correctly() throws ClientProtocolException, IOException {
+    	 String expected_id = "101";
+         String expected_title = "scan paperwork";
+         String expected_status = "false";
+         String expected_description = "";
+         //Set request
+         HttpUriRequest request = new HttpGet(baseUrl + toDoEndIDPoint + expected_id);
+         HttpResponse httpResponse = httpClient.execute(request);
+
+         //Check response status
+         assertEquals(404, httpResponse.getStatusLine().getStatusCode());
     }
 
 
