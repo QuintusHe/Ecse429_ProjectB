@@ -96,6 +96,26 @@ public class TaskStatusStepDefinitions {
         } catch (Exception e) {};
     }
     
+    @Given("I have a task under the todo list with a status of done")
+    public void I_have_a_task_under_the_todo_list_with_a_status_of_done() {
+    	HttpPost request = new HttpPost(baseUrl+toDoEndPoint+"/"+todoListId1);
+        JSONObject json = new JSONObject();
+        json.put("title", todoListTitle1);
+        json.put("doneStatus", true);
+        json.put("description", todoListDescription1);
+        try {
+            StringEntity userEntity = new StringEntity(json.toString());
+            request.addHeader("content-type", "application/json");
+            request.setEntity(userEntity);
+            HttpResponse httpResponse = httpClient.execute(request);
+            String responseBody = EntityUtils.toString(httpResponse.getEntity(), StandardCharsets.UTF_8);
+            JSONObject response_jason = (JSONObject) jsonParser.parse(responseBody);
+            JSONArray todos_list = (JSONArray) response_jason.get(todos);
+            JSONObject todo_object = (JSONObject) todos_list.get(0);
+            todoListId1 = (String) (todo_object.get("id"));
+        } catch (Exception e) {};
+    }
+    
     @When("I mark the task as done")
     public void I_mark_the_task_as_done() {
     	HttpPost request = new HttpPost(baseUrl+toDoEndPoint+"/"+todoListId1);

@@ -4,9 +4,16 @@ Feature: Task Status
 	Background:
 		Given I have connected to the TodoManager Server
 		Given I have a course (project)
+
 	Scenario: Student changes the status of a task to done
 		Given I have a todo list named as my course
 		And I have a task under the todo list with a status of not done
+		When I mark the task as done
+		Then I verify that the task's status is done
+
+	Scenario: Student changes the status of a done task to done
+		Given I have a todo list named as my course
+		And I have a task under the todo list with a status of done
 		When I mark the task as done
 		Then I verify that the task's status is done
 
