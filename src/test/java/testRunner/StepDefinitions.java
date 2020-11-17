@@ -54,7 +54,7 @@ public class StepDefinitions extends FeatureStepDefinitions {
         //System.getProperty("java.home") + "/bin/java"
         command.add("java"); // quick and dirty for unix
         command.add("-jar");
-        command.add("/Users/hezirui/Downloads/runTodoManagerRestAPI-1.5.5.jar");
+        command.add("/Users/hehuimincheng/ECSE429/runTodoManagerRestAPI-1.5.5.jar");
 
         ProcessBuilder builder = new ProcessBuilder(command);
         builder.redirectErrorStream(true);

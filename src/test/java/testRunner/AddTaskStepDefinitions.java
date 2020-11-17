@@ -167,9 +167,7 @@ public class AddTaskStepDefinitions extends FeatureStepDefinitions{
     @Then("I shall be notified that the todo list doesn't exist")
     public void iShallBeNotifiedThatTheTodoListDoesnTExist() {
         try {
-            JSONObject response_jason = send_post_request(toDoEndIDPoint +expected_id+tasksOfEndPoint, 202, userEntity);
-            assertEquals(title_value, (String) (response_jason.get(title)));
-            result_id = (String) response_jason.get("id");
+            JSONObject response_jason = send_post_request(toDoEndIDPoint +expected_id+tasksOfEndPoint, 404, userEntity);
         } catch (Exception ParseException) {
             System.out.println("Failure at AddTestS3");
         }

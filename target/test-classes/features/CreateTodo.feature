@@ -14,7 +14,7 @@ Feature: Todo Creation
 		When I create a todo list with a title and description
 		Then I verify that a new todo list is created with the title and the description
 
-	Scenario: Student create a replicated todo
+	Scenario: Student create a todo with empty title
 		Given I have a todo list associated with the project
 		When I create the a todo list with empty title
 		Then I shall be notified that the creation of to-do is failed
